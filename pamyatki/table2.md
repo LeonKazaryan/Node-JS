@@ -71,6 +71,12 @@ readFile(путь к файлу, { encoding: 'utf-8'}, callback(err, result)) - 
 writeFileSync(путь где создать файл, данные,  callback(err, result) - создает новый файл, callback вызывается когда функция выполнится 
 
 
+
+import { Router } from 'express'
+
+
+
+
 npm install - установить пакет, зависимости, всё-всё
 npm install -D nodemon - установить devDependencies (они нужны только для разработки)
 
@@ -83,6 +89,9 @@ nodemon названиеФайла - автоматически сохраняе
 200-299 - успешный запрос
 400-499 - ошибка со стороны клиента
 500-599 - ошибка со стороны сервера
+
+401 - не зарегестрирован пользователь
+
 
 Npm init -y
 Git init

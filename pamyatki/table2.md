@@ -75,6 +75,10 @@ writeFileSync(путь где создать файл, данные,  callback(e
 import { Router } from 'express'
 
 
+import jvt from 'jsonwebtoken'
+
+const decoded = jwt.verify(token, 'node.js') - вернет расшифрованные данные, принимает токен и ключ
+
 
 
 npm install - установить пакет, зависимости, всё-всё
@@ -91,7 +95,7 @@ nodemon названиеФайла - автоматически сохраняе
 500-599 - ошибка со стороны сервера
 
 401 - не зарегестрирован пользователь
-
+401 - нет прав
 
 Npm init -y
 Git init

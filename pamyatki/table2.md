@@ -80,6 +80,23 @@ import jvt from 'jsonwebtoken'
 const decoded = jwt.verify(token, 'node.js') - вернет расшифрованные данные, принимает токен и ключ
 
 
+WEBPACK
+
+export default{
+    mode: 'development',       -не будет сжимать, даст код, который будут понимать все старые браузеры
+          'production'         -готовый код, максимально все сжимает
+
+    entry:{
+        main: './abstract/abstract-5(webpack)/src/index.js',              - путь к входной точке в проект, обычно это индекс js 
+    },    
+
+    output: {                                                             - описание того, куда вебпак должен сохранить конечный код
+        filename: "[name].bundle.js",                                     - название 
+        path: path.join('./abstract/abstract-5(webpack)', "dist")         - путь до директории, где он создаст bundle.js
+    }
+}
+
+
 
 npm install - установить пакет, зависимости, всё-всё
 npm install -D nodemon - установить devDependencies (они нужны только для разработки)

@@ -1,0 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+div{
+    color: red;
+    background-color: azure ;
+    margin:20px;
+}
+
+.a{
+    color: black;
+    background-color: bisque;
+    font-size: 20px;
+}

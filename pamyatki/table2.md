@@ -82,20 +82,45 @@ const decoded = jwt.verify(token, 'node.js') - вернет расшифрова
 
 WEBPACK
 
+npm install -D html-webpack-plugin                          - установка ХТМЛ плагинов
+npm install -D clean-webpack-plugin                         - установ плагинов ОЧИСТКИ
+import HTMLWebPackPlugin from 'html-webpack-plugin'         - это нужно, чтобы работали plugins HTML
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'   - чтобы работал плагин подчистки
+
+npm install -D style-loader css-loader                      - установить лоадеры сss, но импортировать не надо
+
 export default{
-    mode: 'development',       -не будет сжимать, даст код, который будут понимать все старые браузеры
-          'production'         -готовый код, максимально все сжимает
+    mode: 'development',                                                    - не будет сжимать, даст код, который будут понимать все старые браузеры
+          'production'                                                      - готовый код, максимально все сжимает
+
+    context: path.resolve("./", "abstract", "abstract-5(webpack)", "src"),  - сделать папку src по умолчанию, дальше в entry уже можно чисто от src начинать
 
     entry:{
-        main: './abstract/abstract-5(webpack)/src/index.js',              - путь к входной точке в проект, обычно это индекс js 
+        main: './index.js',                                                 - путь к входной точке в проект, обычно это индекс js 
     },    
 
-    output: {                                                             - описание того, куда вебпак должен сохранить конечный код
-        filename: "[name].bundle.js",                                     - название 
-        path: path.join('./abstract/abstract-5(webpack)', "dist")         - путь до директории, где он создаст bundle.js
+    output: {                                                               - описание того, куда вебпак должен сохранить конечный код
+        filename: "[name].[hash].bundle.js",                                - название (можно добавить [hash], который даст индивидуальный айди в название)
+        path: path.join('./abstract/abstract-5(webpack)', "dist")           - путь до директории, где он создаст bundle.js
+    },
+
+    plugins: [
+        new HTMLWebpackPlugin(),                                            - создает в папке dist html файл, подключает все js файлы (не смотрит на HTML)
+        ИЛИ
+        [new HTMLWebpackPlugin({
+            template: './index.html'                                        - путь до хтмл файла, в данном случае он будет подключен к index.html 
+        })],
+
+         new CleanWebpackPlugin()                                           - удаляет папку dist и создает новую каждый при npx webpack
+    ],
+
+    module: {                                                               - это нужно, чтобы webpack понимал файлы помимо js 
+        rules: [{
+            test: /\.css$/,                                                 - здесь скидываем формат расширения файла
+            use: ['style-loader', 'css-loader']                             - если увидит файл из test'a, пропустит файл через эти лоадеры
+        }]
     }
 }
-
 
 
 npm install - установить пакет, зависимости, всё-всё

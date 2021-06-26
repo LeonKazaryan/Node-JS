@@ -86,9 +86,11 @@ npm install -D html-webpack-plugin                          - установка
 npm install -D clean-webpack-plugin                         - установ плагинов ОЧИСТКИ
 import HTMLWebPackPlugin from 'html-webpack-plugin'         - это нужно, чтобы работали plugins HTML
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'   - чтобы работал плагин подчистки
+import CopyWebpackPlugin from 'copy-webpack-plugin'         - плагины копировки
 
 npm install -D style-loader css-loader                      - установить лоадеры сss, но импортировать не надо
 npm install webpack-dev-server                              - установить для того, чтобы работал лайф сервер (каждый раз когда сохраняешь браузер сам обновляет)
+npm install -D file-loader                                  - лоадер файлов
 
 export default{
     mode: 'development',                                                    - не будет сжимать, даст код, который будут понимать все старые браузеры
@@ -105,6 +107,12 @@ export default{
         path: path.join('./abstract/abstract-5(webpack)', "dist")           - путь до директории, где он создаст bundle.js
     },
 
+       optimization: {
+        splitChunks:{                                                       - будет оптимизировать на чанки 
+            chunks: 'all',
+        },
+    },
+
     plugins: [
         new HTMLWebpackPlugin(),                                            - создает в папке dist html файл, подключает все js файлы (не смотрит на HTML)
         ИЛИ
@@ -113,13 +121,28 @@ export default{
         })],
 
          new CleanWebpackPlugin()                                           - удаляет папку dist и создает новую каждый при npx webpack
+
+         new CopyWebpackPlugin({                                                                    - копирует, чтобы мы сами это не делали
+            patterns: [
+                {
+                from: path.resolve('./','abstract', 'abstract-5(webpack)', 'src', 'favicon.ico' ),  - откуда взять файл на копию
+                to: path.resolve('./','abstract', 'abstract-5(webpack)', 'dist')                    - куда добавить файл на копию
+            }, ]
+        })                                                                                          - можно много добавлять в массив обьектов
     ],
 
     module: {                                                               - это нужно, чтобы webpack понимал файлы помимо js 
-        rules: [{
+        rules: [
+            {
             test: /\.css$/,                                                 - здесь скидываем формат расширения файла
-            use: ['style-loader', 'css-loader']                             - если увидит файл из test'a, пропустит файл через эти лоадеры
-        }]
+            use: ['style-loader', 'css-loader']                             - если увидит файл из test'a, пропустит файл через эти 
+            }
+        
+            {
+             test: /\.(png|jpg|svg|gif)$/,                                  - для картинок
+             use: ['file-loader'],                                          - используем лоадер файлов
+            }
+         ]
     },
 
      devServer: {

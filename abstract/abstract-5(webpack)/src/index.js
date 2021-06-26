@@ -1,5 +1,5 @@
 import User from './User.js';
-import './style/app.css'
+import './style/app.scss'
 
 // import img from './assets/amogus.png'
 

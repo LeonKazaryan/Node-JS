@@ -50,7 +50,12 @@ export default{
          {
              test: /\.(png|jpg|svg|gif)$/,
              use: ['file-loader'],
-         }
+         },
+
+         {
+            test: /\.s[ac]ss$/,
+            use: ['style-loader', 'css-loader', 'sass-loader'],
+        },
     ]
     },
 
